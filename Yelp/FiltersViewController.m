@@ -19,12 +19,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.settings = @{@"Category" : @[@"Bear", @"Black Swan", @"Buffalo"],
-                      @"Sort by" : @[@"Best Match", @"Distance", @"Rating"],
-                      @"Radius" : @[@"Dog", @"Donkey"],
-                      @"Deals" : @[@"On", @"Off"]
-                    };
+    NSDictionary *propertiesList = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"filters" ofType:@"plist"]];
+    self.settings = propertiesList[@"sections"];
     self.sections = [self.settings allKeys];
     
     self.tableView.delegate = self;
@@ -50,16 +46,26 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return [self.sections objectAtIndex:section];
+    NSString *sectionID = [self.sections objectAtIndex:section];
+    NSDictionary *setting = [self.settings objectForKey:sectionID];
+    return setting[@"display_name"];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSArray *options = [self.settings objectForKey:[self.sections objectAtIndex:section]];
     return options.count;
 }
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FiltersViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"FiltersViewCell"];
+    
+    NSDictionary *section = [self.settings objectForKey:[self.sections objectAtIndex:indexPath.section]];
+    NSArray *sectionOptions = [section[@"options"] allKeys];
+    NSLog(@"sectionOptions objectAtIndex:indexPath.row %@", [sectionOptions objectAtIndex:indexPath.row]);
+    
+    if (sectionOptions.count) {
+        NSDictionary *option = [section objectForKey:[sectionOptions objectAtIndex:indexPath.row]];
+        cell.optionLabel.text = option[@"display_name"];
+    }
     return cell;
     
 }
