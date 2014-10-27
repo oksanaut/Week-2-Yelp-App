@@ -13,12 +13,17 @@
 - (void)awakeFromNib {
     // Initialization code
     self.posterView.layer.cornerRadius = 8.0;
+    self.nameLabel.preferredMaxLayoutWidth = self.nameLabel.frame.size.width;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)layoutSubviews {
+    self.nameLabel.preferredMaxLayoutWidth = self.nameLabel.frame.size.width;
 }
 
 @end

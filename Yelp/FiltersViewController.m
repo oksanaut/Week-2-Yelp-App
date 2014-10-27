@@ -8,6 +8,7 @@
 
 #import "FiltersViewController.h"
 #import "FiltersViewCell.h"
+#import "Filterset.h"
 
 @interface FiltersViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -32,6 +33,8 @@
     
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(handleCancel)];
     UIBarButtonItem *searchButton = [[UIBarButtonItem alloc] initWithTitle:@"Search" style:UIBarButtonItemStyleBordered target:self action:@selector(handleApply)];
+    cancelButton.tintColor = [UIColor whiteColor];
+    searchButton.tintColor = [UIColor whiteColor];
     self.navigationItem.leftBarButtonItem = cancelButton;
     self.navigationItem.rightBarButtonItem = searchButton;
     // Do any additional setup after loading the view from its nib.
@@ -52,21 +55,28 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSArray *options = [self.settings objectForKey:[self.sections objectAtIndex:section]];
+    NSDictionary *setting = [self.settings objectForKey:[self.sections objectAtIndex:section]];
+    NSArray *options = setting[@"options"];
+    NSLog(@"options in number of rows %@", setting[@"options"]);
     return options.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     FiltersViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"FiltersViewCell"];
-    
-    NSDictionary *section = [self.settings objectForKey:[self.sections objectAtIndex:indexPath.section]];
-    NSArray *sectionOptions = [section[@"options"] allKeys];
-    NSLog(@"sectionOptions objectAtIndex:indexPath.row %@", [sectionOptions objectAtIndex:indexPath.row]);
-    
-    if (sectionOptions.count) {
-        NSDictionary *option = [section objectForKey:[sectionOptions objectAtIndex:indexPath.row]];
-        cell.optionLabel.text = option[@"display_name"];
-    }
+    cell.cellDelegate = self;
+//    NSDictionary *section = [self.settings objectForKey:[self.sections objectAtIndex:indexPath.section]];
+//
+//    NSArray *sectionOptions = [section[@"options"] allKeys];
+//    
+//    if (sectionOptions.count) {
+//        NSDictionary *option = [section objectForKey:[sectionOptions objectAtIndex:indexPath.row]];
+//        cell.filterset = [self.settings objectForKey:[self.sections objectAtIndex:indexPath.section]];
+//    }
     return cell;
+    
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
 }
 

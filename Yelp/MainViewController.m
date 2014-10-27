@@ -53,11 +53,14 @@ NSString * const kYelpTokenSecret = @"WzM9njf77xDC7ItmCz2sAoTpbBQ";
     
     self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     self.searchBar.delegate = self;
+    self.searchBar.placeholder = @"Search";
     [self.searchBar sizeToFit];
-    self.searchBar.text = self.searchTerm;
 
-    UIBarButtonItem *filterButton = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(onFilterButton)];
-    self.navigationItem.leftBarButtonItem = filterButton;
+    UIBarButtonItem *filterButton = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStyleBordered target:self action:@selector(onFilterButton)];
+    UIBarButtonItem *space = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil];
+    space.width = 8;
+    filterButton.tintColor = [UIColor whiteColor];
+    self.navigationItem.leftBarButtonItems = @[filterButton, space];
     self.navigationItem.titleView = self.searchBar;
     
     // Do any additional setup after loading the view from its nib.
@@ -83,7 +86,7 @@ NSString * const kYelpTokenSecret = @"WzM9njf77xDC7ItmCz2sAoTpbBQ";
     cell.ratingsCountLabel.text = [NSString stringWithFormat:@"%@ %@%@", business[@"review_count"], @"Review", (reviewCount == 1 ? @"" : @"s")];
     
     cell.expenseLabel.text = [@"" stringByPaddingToLength:arc4random_uniform(5) withString: @"$" startingAtIndex:0];
-    cell.addressLabel.text = [NSString stringWithFormat:@"%@, %@", [business valueForKeyPath:@"location.display_address"][0], [business valueForKeyPath:@"location.neighborhoods"][0]];;
+    cell.addressLabel.text = [NSString stringWithFormat:@"%@, %@", [business valueForKeyPath:@"location.display_address"][0], [business valueForKeyPath:@"location.neighborhoods"][0]];
 
     cell.tagsLabel.text = [business[@"categories"][0] componentsJoinedByString:@", "];
     [cell.posterView setImageWithURL:[NSURL URLWithString:business[@"image_url"]]];
@@ -96,22 +99,32 @@ NSString * const kYelpTokenSecret = @"WzM9njf77xDC7ItmCz2sAoTpbBQ";
     
     FiltersViewController *fvc = [[FiltersViewController alloc] init];
     UINavigationController *nfcs = [[UINavigationController alloc] initWithRootViewController:fvc];
+    nfcs.navigationBar.barTintColor = [UIColor redColor];
+    nfcs.navigationBar.backgroundColor = [UIColor whiteColor];
     [self presentViewController:nfcs animated:YES completion: nil];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    self.searchTerm = searchText;
-    [self fetchData:searchText];
+    if (![searchText isEqual:self.searchTerm]) {
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        [self fetchData:searchText];
+    }
 }
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
-    NSString *searchTerm = searchBar.text;
-    [self fetchData:searchTerm];
+    NSString *searchText = searchBar.text;
+    if (![searchText isEqual:self.searchTerm]) {
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        [self fetchData:searchText];
+    }
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    NSString *searchTerm = searchBar.text;
-    [self fetchData:searchTerm];
+    NSString *searchText = searchBar.text;
+    if (![searchText isEqual:self.searchTerm]) {
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        [self fetchData:searchText];
+    }
 }
 
 - (void)fetchData:(NSString *)searchTerm {
@@ -125,8 +138,8 @@ NSString * const kYelpTokenSecret = @"WzM9njf77xDC7ItmCz2sAoTpbBQ";
 }
 
 - (IBAction)onTap:(id)sender {
+    NSLog(@"onTap!");
     [self.view endEditing:YES];
-    
 }
 
 @end

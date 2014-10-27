@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment defaultVersion="1552" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <objects>
@@ -21,6 +22,7 @@
                 </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <gestureRecognizers/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="tRS-K7-C8s" secondAttribute="bottom" id="L5H-LC-z2p"/>
                 <constraint firstItem="tRS-K7-C8s" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="dos-Xk-KJz"/>
@@ -29,5 +31,10 @@
             </constraints>
             <point key="canvasLocation" x="139" y="154"/>
         </view>
+        <tapGestureRecognizer id="XAm-jZ-SUq">
+            <connections>
+                <outlet property="delegate" destination="i5M-Pr-FkT" id="KqR-Gp-wna"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
 </document>

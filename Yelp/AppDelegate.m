@@ -16,6 +16,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     MainViewController *vc = [[MainViewController alloc] init];
     UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
+    nvc.navigationBar.barTintColor = [UIColor redColor];
     
     self.window.rootViewController = nvc;
     
