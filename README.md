@@ -32,4 +32,4 @@ Time spent: 20hrs
 
 ### Walkthrough
 
-![Video Walkthrough](...)
+![Video Walkthrough](https://raw.githubusercontent.com/oksanaut/Week-2-Yelp-App/master/Yelp.gif)
