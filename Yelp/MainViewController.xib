@@ -19,6 +19,7 @@
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="tRS-K7-C8s">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <gestureRecognizers/>
                 </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -29,12 +30,11 @@
                 <constraint firstAttribute="trailing" secondItem="tRS-K7-C8s" secondAttribute="trailing" id="f39-gN-ucf"/>
                 <constraint firstItem="tRS-K7-C8s" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="ynI-z4-bXF"/>
             </constraints>
+            <connections>
+                <outletCollection property="gestureRecognizers" destination="TMF-ow-fbj" appends="YES" id="hXH-F7-lpf"/>
+            </connections>
             <point key="canvasLocation" x="139" y="154"/>
         </view>
-        <tapGestureRecognizer id="XAm-jZ-SUq">
-            <connections>
-                <outlet property="delegate" destination="i5M-Pr-FkT" id="KqR-Gp-wna"/>
-            </connections>
-        </tapGestureRecognizer>
+        <tapGestureRecognizer id="TMF-ow-fbj"/>
     </objects>
 </document>

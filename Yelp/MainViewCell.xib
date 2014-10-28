@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment version="2048" identifier="iOS"/>
+        <deployment version="2048" defaultVersion="1552" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <objects>
@@ -37,7 +37,7 @@
                                 <color key="textColor" red="0.50137992527173914" green="0.50137992527173914" blue="0.50137992527173914" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="0.08mi" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aZh-yr-3Aa">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="0.08mi" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aZh-yr-3Aa">
                                 <rect key="frame" x="269" y="0.0" width="35" height="18"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="18" id="jl8-Xt-oWh"/>
@@ -47,25 +47,25 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$$" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aba-Sa-hvW">
-                                <rect key="frame" x="291" y="24" width="13" height="14"/>
+                                <rect key="frame" x="291" y="24" width="13" height="13.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <color key="textColor" red="0.50137992529999997" green="0.50137992529999997" blue="0.50137992529999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1175 Folsom St, SoMa" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D3v-Jw-3CZ">
-                                <rect key="frame" x="88" y="44" width="118" height="14"/>
+                                <rect key="frame" x="88" y="44" width="117.5" height="13.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thai, Seafood, Salads" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="68W-TZ-0ZN">
-                                <rect key="frame" x="88" y="64" width="113" height="14"/>
+                                <rect key="frame" x="88" y="63" width="113" height="13.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <color key="textColor" red="0.50137992529999997" green="0.50137992529999997" blue="0.50137992529999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="255" verticalCompressionResistancePriority="900" text="Business Name" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ycb-36-hFd">
-                                <rect key="frame" x="88" y="0.0" width="103" height="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="255" text="Business Name" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ycb-36-hFd">
+                                <rect key="frame" x="88" y="0.0" width="175" height="17"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -80,7 +80,7 @@
                             <constraint firstItem="lLL-DW-evA" firstAttribute="top" secondItem="Ycb-36-hFd" secondAttribute="bottom" constant="6" id="4bD-Nx-Hqr"/>
                             <constraint firstAttribute="trailing" secondItem="aZh-yr-3Aa" secondAttribute="trailing" id="4tD-t5-y3T"/>
                             <constraint firstItem="lLL-DW-evA" firstAttribute="centerY" secondItem="GJS-tp-PQS" secondAttribute="centerY" id="8HW-li-RZi"/>
-                            <constraint firstItem="aZh-yr-3Aa" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ycb-36-hFd" secondAttribute="trailing" constant="6" id="BxH-Tb-Mcn"/>
+                            <constraint firstItem="aZh-yr-3Aa" firstAttribute="leading" secondItem="Ycb-36-hFd" secondAttribute="trailing" constant="6" id="BxH-Tb-Mcn"/>
                             <constraint firstItem="aZh-yr-3Aa" firstAttribute="top" secondItem="wZa-nf-Fbq" secondAttribute="top" id="CBa-YH-VU3"/>
                             <constraint firstItem="GJS-tp-PQS" firstAttribute="leading" secondItem="lLL-DW-evA" secondAttribute="trailing" constant="6" id="De0-6i-tzy"/>
                             <constraint firstItem="Aba-Sa-hvW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="GJS-tp-PQS" secondAttribute="trailing" constant="6" id="FRO-gG-mz6"/>
@@ -116,14 +116,14 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="addressLabel" destination="D3v-Jw-3CZ" id="3rd-wS-yXp"/>
-                <outlet property="distanceLabel" destination="aZh-yr-3Aa" id="UNh-79-oVO"/>
-                <outlet property="expenseLabel" destination="Aba-Sa-hvW" id="jur-7b-EkL"/>
-                <outlet property="nameLabel" destination="Ycb-36-hFd" id="9VJ-LB-HeG"/>
-                <outlet property="posterView" destination="cMI-Pz-BkU" id="Lwc-zb-Yy2"/>
-                <outlet property="ratingView" destination="lLL-DW-evA" id="mve-ST-kB2"/>
-                <outlet property="ratingsCountLabel" destination="GJS-tp-PQS" id="cZB-9A-GpS"/>
-                <outlet property="tagsLabel" destination="68W-TZ-0ZN" id="1X0-hX-3E8"/>
+                <outlet property="addressLabel" destination="D3v-Jw-3CZ" id="hwZ-0P-LbR"/>
+                <outlet property="categoriesLabel" destination="68W-TZ-0ZN" id="9os-EZ-id2"/>
+                <outlet property="distanceLabel" destination="aZh-yr-3Aa" id="A25-ME-SeM"/>
+                <outlet property="expenseLabel" destination="Aba-Sa-hvW" id="kYc-od-ReM"/>
+                <outlet property="nameLabel" destination="Ycb-36-hFd" id="nkb-ok-UTh"/>
+                <outlet property="posterView" destination="cMI-Pz-BkU" id="som-NX-KfZ"/>
+                <outlet property="ratingCount" destination="GJS-tp-PQS" id="ovd-8a-qOs"/>
+                <outlet property="ratingView" destination="lLL-DW-evA" id="I0v-5t-uSI"/>
             </connections>
             <point key="canvasLocation" x="421" y="261"/>
         </tableViewCell>

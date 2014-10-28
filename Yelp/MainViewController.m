@@ -7,6 +7,7 @@
 //
 
 #import "MainViewController.h"
+#import "Business.h"
 #import "MainViewCell.h"
 #import "FiltersViewController.h"
 
@@ -18,13 +19,18 @@ NSString * const kYelpConsumerSecret = @"_GU12eZeAhrotXktFVK2aOBiYes";
 NSString * const kYelpToken = @"cVTesHHvHouftkminx3X15t5fGqD1Sp1";
 NSString * const kYelpTokenSecret = @"WzM9njf77xDC7ItmCz2sAoTpbBQ";
 
-@interface MainViewController ()
+@interface MainViewController () <FiltersViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) IBOutlet UISearchBar *searchBar;
+@property (nonatomic, strong) UIGestureRecognizer *gestureRecognizer;
 
 @property (nonatomic, strong) YelpClient *client;
-@property (nonatomic, strong) NSArray *data;
+@property (nonatomic, strong) NSArray *businesses;
 @property (nonatomic, strong) NSString *searchTerm;
+@property (nonatomic, strong) NSMutableDictionary *filters;
+
+- (IBAction)onTap:(id)sender;
+- (void)fetchData;
 
 @end
 
@@ -35,7 +41,9 @@ NSString * const kYelpTokenSecret = @"WzM9njf77xDC7ItmCz2sAoTpbBQ";
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.client = [[YelpClient alloc] initWithConsumerKey:kYelpConsumerKey consumerSecret:kYelpConsumerSecret accessToken:kYelpToken accessSecret:kYelpTokenSecret];
-        [self fetchData:@"Thai"];
+        self.searchTerm = @"Sushi";
+        [self fetchData];
+        
     }
     return self;
 }
@@ -43,7 +51,7 @@ NSString * const kYelpTokenSecret = @"WzM9njf77xDC7ItmCz2sAoTpbBQ";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
 
@@ -73,63 +81,77 @@ NSString * const kYelpTokenSecret = @"WzM9njf77xDC7ItmCz2sAoTpbBQ";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.data.count;
+    return self.businesses.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *business = self.data[indexPath.row];
     MainViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"MainViewCell"];
-    
-    cell.nameLabel.text = business[@"name"];
-    
-    NSInteger reviewCount = [business[@"review_count"] integerValue];
-    cell.ratingsCountLabel.text = [NSString stringWithFormat:@"%@ %@%@", business[@"review_count"], @"Review", (reviewCount == 1 ? @"" : @"s")];
-    
-    cell.expenseLabel.text = [@"" stringByPaddingToLength:arc4random_uniform(5) withString: @"$" startingAtIndex:0];
-    cell.addressLabel.text = [NSString stringWithFormat:@"%@, %@", [business valueForKeyPath:@"location.display_address"][0], [business valueForKeyPath:@"location.neighborhoods"][0]];
-
-    cell.tagsLabel.text = [business[@"categories"][0] componentsJoinedByString:@", "];
-    [cell.posterView setImageWithURL:[NSURL URLWithString:business[@"image_url"]]];
-    [cell.ratingView setImageWithURL:[NSURL URLWithString:business[@"rating_img_url_large"]]];
-    
+    cell.business = self.businesses[indexPath.row];
     return cell;
+}
+- (void)filtersViewController:(FiltersViewController *)filtersViewController didChangeFilters:(NSDictionary *)filters {
+    self.filters = [filters copy];
+    self.searchTerm = @"";
+    self.searchBar.text = @"";
+    [self fetchData];
 }
 
 - (void)onFilterButton {
+    FiltersViewController *vc = [[FiltersViewController alloc] init];
+    vc.delegate = self;
+    [vc setAppliedFilters:self.filters];
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
+    nvc.navigationBar.barTintColor = [UIColor redColor];
+    nvc.navigationBar.backgroundColor = [UIColor whiteColor];
     
-    FiltersViewController *fvc = [[FiltersViewController alloc] init];
-    UINavigationController *nfcs = [[UINavigationController alloc] initWithRootViewController:fvc];
-    nfcs.navigationBar.barTintColor = [UIColor redColor];
-    nfcs.navigationBar.backgroundColor = [UIColor whiteColor];
-    [self presentViewController:nfcs animated:YES completion: nil];
+    [self presentViewController:nvc animated:YES completion: nil];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    if (self.filters.count) {
+        [self.filters removeAllObjects];
+    }
     if (![searchText isEqual:self.searchTerm]) {
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-        [self fetchData:searchText];
+        self.searchTerm = searchText;
+        [self fetchData];
     }
 }
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
     NSString *searchText = searchBar.text;
+    if (self.filters.count) {
+      [self.filters removeAllObjects];
+    }
     if (![searchText isEqual:self.searchTerm]) {
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-        [self fetchData:searchText];
+        self.searchTerm = searchText;
+        [self.view endEditing:YES];
+
+        [self fetchData];
     }
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     NSString *searchText = searchBar.text;
-    if (![searchText isEqual:self.searchTerm]) {
+    if (self.filters.count) {
+        [self.filters removeAllObjects];
+    }    if (![searchText isEqual:self.searchTerm]) {
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-        [self fetchData:searchText];
+        self.searchTerm = searchText;
+        [self.view endEditing:YES];
+
+        [self fetchData];
     }
 }
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
+    [self.view endEditing:YES];
+}
 
-- (void)fetchData:(NSString *)searchTerm {
-    [self.client searchWithTerm:searchTerm success:^(AFHTTPRequestOperation *operation, id response) {
-        self.data = response[@"businesses"];
+- (void)fetchData {
+    [self.client searchWithTerm:self.searchTerm params:[self.filters copy] success:^(AFHTTPRequestOperation *operation, id response) {
+        NSArray *businessDictionaries = response[@"businesses"];
+        self.businesses = [Business businessesWithDictionaries:businessDictionaries];
         [self.tableView reloadData];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -138,7 +160,7 @@ NSString * const kYelpTokenSecret = @"WzM9njf77xDC7ItmCz2sAoTpbBQ";
 }
 
 - (IBAction)onTap:(id)sender {
-    NSLog(@"onTap!");
+    NSLog(@"tapping!");
     [self.view endEditing:YES];
 }
 

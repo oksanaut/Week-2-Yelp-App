@@ -8,7 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+@class FiltersViewController;
+
+@protocol FiltersViewControllerDelegate <NSObject>
+
+- (void)filtersViewController:(FiltersViewController *)filtersViewController didChangeFilters:(NSDictionary *)filters;
+@end
 
 @interface FiltersViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@property (readonly, nonatomic) NSDictionary *filters;
+@property (nonatomic, weak) id<FiltersViewControllerDelegate> delegate;
+
+- (void)setAppliedFilters:(NSMutableDictionary *)filters;
 
 @end
+

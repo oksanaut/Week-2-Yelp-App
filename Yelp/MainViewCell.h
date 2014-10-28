@@ -7,15 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Business.h"
 
 @interface MainViewCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIImageView *posterView;
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *ratingView;
-@property (weak, nonatomic) IBOutlet UILabel *ratingsCountLabel;
-@property (weak, nonatomic) IBOutlet UILabel *expenseLabel;
-@property (weak, nonatomic) IBOutlet UILabel *addressLabel;
-@property (weak, nonatomic) IBOutlet UILabel *tagsLabel;
+@property (nonatomic, strong) Business *business;
 
 @end
